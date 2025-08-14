@@ -28,6 +28,7 @@ The default environment name is "GeneBurdenContainer".
   To run commands within the container:
   
   apptainer exec --bind <comma separated list of directories your command needs access to> GBpipeline.sif <command>
+  example- apptainer exec --bind /data/GeneBurdenPipeline/workdir/ GBpipeline.sif nextflow run step2_to_7.nf -params-file step2.params.yaml -with-report report.html -with-trace trace.txt
   
   Make sure to activate the conda environment from the .yaml file before running your command.
 
