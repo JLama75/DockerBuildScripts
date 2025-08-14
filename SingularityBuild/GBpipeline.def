@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: continuumio/miniconda3
+
+%post
+  # Ensure conda is up to date
+  conda update -n base -c defaults conda -y
+  
+  # Copy environment file into container
+  cp /tmp/GeneBurdenCondaEnv.yaml /GeneBurdenCondaEnv.yaml
+  
+  # Create conda env from environment.yaml
+  conda env create -f /GeneBurdenCondaEnv.yaml
+  
+  # Clean up
+  conda clean -afy
+
+%files
+  GeneBurdenCondaEnv.yaml /tmp/GeneBurdenCondaEnv.yaml
+
+%runscript
+  exec "$@"
