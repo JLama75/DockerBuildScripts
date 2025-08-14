@@ -4,33 +4,7 @@ channels:
   - bioconda
   - nodefaults
 dependencies:
-  - python=3.9
   - regenie=4.1.1   #version=4.1.1
   - ensembl-vep=114.2 #previous version 110.1
-  - perl-bioperl 
-  - nextflow=25.04.4
-  - numpy #version=2.0.2
-  - pandas #version=2.3.0
-  - seaborn #version=0.13.2
-  - plotly #version=6.1.2
-  - matplotlib #version=3.9.4
-  - scikit-learn #version=1.6.1
-  - scipy #version=1.13.1
-  - statsmodels #version=0.14.4
-  - xlsxwriter #version=3.2.3
-  - r-base=4.3.2  #4.3.2
-  - r-devtools
-  - r-optparse
-  - r-dplyr
-  - r-ggplot2
-  - r-qqman
-  - r-data.table
-  - r-stringr
-  - r-ggExtra
-  - r-gridExtra
-  - pip
-  - pip:
-      - pysnptools==0.5.13
-  
-#If pysnptools is not installed use: 
-#pip install pysnptools==0.5.13
+ 
+
