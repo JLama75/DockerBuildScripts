@@ -6,5 +6,6 @@ channels:
 dependencies:
   - regenie=4.1.1   #version=4.1.1
   - ensembl-vep=114.2 #previous version 110.1
+  - perl-bioperl 
  
 
