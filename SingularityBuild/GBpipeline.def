@@ -2,34 +2,22 @@ Bootstrap: docker
 From: continuumio/miniconda3:latest
 
 %labels
-    Author YourName
+    Author Jyoti Lama
     Version 1.0
-    Description "Singularity container for QC pipeline: Regenie via Conda, everything else installed manually"
+    Description "Singularity container for Gene Burden pipeline: Regenie and VEP via Conda, everything else installed manually"
 
 %environment
     export LC_ALL=C.UTF-8
     export LANG=C.UTF-8
 
 
-%files
-    GeneBurdenCondaEnv.yaml /tmp/GeneBurdenCondaEnv.yaml
-
 %post
-    #-------------------------------
-    # Update conda base
-    #-------------------------------
-    conda update -n base -c defaults conda -y
+    export DEBIAN_FRONTEND=noninteractive
+    export TZ=America/New_York
+    ln -snf /usr/share/zoneinfo/$TZ /etc/localtime
+    
+    echo $TZ > /etc/timezone
 
-    #-------------------------------
-    # Create conda environment with Regenie
-    #-------------------------------
-    cp /tmp/GeneBurdenCondaEnv.yaml /GeneBurdenCondaEnv.yaml
-    conda env create -f /GeneBurdenCondaEnv.yaml
-    conda clean -afy
-
-    #-------------------------------
-    # Install system packages
-    #-------------------------------
     apt-get update && apt-get upgrade -y
     apt-get install -y \
         build-essential \
@@ -37,8 +25,6 @@ From: continuumio/miniconda3:latest
         curl \
         unzip \
         git \
-        python3.9 \
-        python3-pip \
         r-base \
         r-base-dev \
         libcurl4-openssl-dev \
@@ -46,37 +32,13 @@ From: continuumio/miniconda3:latest
         libxml2-dev \
         perl \
         cpanminus \
-        openjdk-11-jre-headless \
         ca-certificates \
         locales
 
-    locale-gen en_US.UTF-8
-    update-locale LANG=en_US.UTF-8
 
-    #-------------------------------
-    # Python packages not in Conda
-    #-------------------------------
-    python3 -m pip install --upgrade pip
-    python3 -m pip install \
-        seaborn==0.13.2 \
-        plotly==6.1.2 \
-        matplotlib==3.9.4 \
-        scikit-learn==1.6.1 \
-        statsmodels==0.14.4 \
-        xlsxwriter==3.2.3 \
-        pysnptools==0.5.13 \
-        nextflow==25.04.4
+    # Python packages
+    pip install --upgrade pip
+    pip install seaborn==0.13.2 plotly==6.1.2 matplotlib==3.9.4 scikit-learn==1.6.1 statsmodels==0.14.4 xlsxwriter==3.2.3 pysnptools==0.5.13 nextflow==25.04.4
 
-    #-------------------------------
     # R packages
-    #-------------------------------
     Rscript -e "install.packages(c('dplyr','ggplot2','qqman','data.table','stringr','ggExtra','gridExtra','optparse','devtools'), repos='https://cloud.r-project.org')"
-
-    #-------------------------------
-    # Perl packages
-    #-------------------------------
-    cpanm Bio::Perl
-
-%runscript
-
-    exec "$@"
