@@ -56,8 +56,8 @@ From: continuumio/miniconda3:latest
     #-------------------------------
     # Python packages not in Conda
     #-------------------------------
-    python3.9 -m pip install --upgrade pip
-    python3.9 -m pip install \
+    python3 -m pip install --upgrade pip
+    python3 -m pip install \
         seaborn==0.13.2 \
         plotly==6.1.2 \
         matplotlib==3.9.4 \
